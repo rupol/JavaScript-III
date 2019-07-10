@@ -129,3 +129,102 @@ console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.
 // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
 // * Create two new objects, one a villain and one a hero and fight it out with methods!
+const hero = new Hero({
+  createdAt: new Date(),
+  dimensions: {
+    length: 1,
+    width: 2,
+    height: 4
+  },
+  healthPoints: 30,
+  name: "Link",
+  team: "Hyrule",
+  weapons: ["Bow", "Master Sword", "Boomerang", "Slingshot", "Hookshot"],
+  language: "Hylian",
+  alignment: "Lawful Good"
+});
+
+const villain = new Villain({
+  createdAt: new Date(),
+  dimensions: {
+    length: 2,
+    width: 3,
+    height: 6
+  },
+  healthPoints: 50,
+  name: "Ganondorf",
+  team: "Dark Realm",
+  weapons: ["Sword of Sages", "Magic", "Choke"],
+  language: "Gerudo",
+  alignment: "Neutral Evil"
+});
+
+function Hero(heroAttr) {
+  Humanoid.call(this, heroAttr);
+  this.alignment = heroAttr.alignment;
+}
+
+Hero.prototype = Object.create(Humanoid.prototype);
+
+Hero.prototype.attack = function() {
+  return function() {
+    let damageDealt = Math.floor(Math.random() * (1 + 15 - 1)) + 1;
+    villain.healthPoints = villain.healthPoints - damageDealt;
+    let currentWeapon =
+      hero.weapons[Math.floor(Math.random() * hero.weapons.length)];
+    if (villain.healthPoints > 0) {
+      return `${
+        hero.name
+      } has dealt ${damageDealt} points of damage using ${currentWeapon}. ${
+        villain.name
+      } health: ${villain.healthPoints}`;
+    } else if (villain.healthPoints <= 0) {
+      return `${hero.name} has destroyed ${
+        villain.name
+      }! There is order once more!`;
+    }
+  };
+};
+
+const newHeroAttack = Hero.prototype.attack();
+
+function Villain(villainAttr) {
+  Humanoid.call(this, villainAttr);
+  this.alignment = villainAttr.alignment;
+}
+
+Villain.prototype = Object.create(Humanoid.prototype);
+
+Villain.prototype.attack = function() {
+  return function() {
+    let damageDealt = Math.floor(Math.random() * (1 + 15 - 1)) + 1;
+    hero.healthPoints = hero.healthPoints - damageDealt;
+    let currentWeapon =
+      villain.weapons[Math.floor(Math.random() * villain.weapons.length)];
+    if (hero.healthPoints > 0) {
+      return `${
+        villain.name
+      } has dealt ${damageDealt} points of damage using ${currentWeapon}. ${
+        hero.name
+      } health: ${hero.healthPoints}`;
+    } else if (hero.healthPoints <= 0) {
+      return `${villain.name} has destroyed ${hero.name}! Chaos reigns!`;
+    }
+  };
+};
+
+const newVillainAttack = Villain.prototype.attack();
+
+console.log(newHeroAttack());
+console.log(newVillainAttack());
+console.log(newHeroAttack());
+console.log(newHeroAttack());
+console.log(newVillainAttack());
+console.log(newHeroAttack());
+console.log(newHeroAttack());
+console.log(newVillainAttack());
+console.log(newHeroAttack());
+console.log(newHeroAttack());
+console.log(newVillainAttack());
+console.log(newHeroAttack());
+console.log(newHeroAttack());
