@@ -215,16 +215,12 @@ Villain.prototype.attack = function() {
 
 const newVillainAttack = Villain.prototype.attack();
 
-console.log(newHeroAttack());
-console.log(newVillainAttack());
-console.log(newHeroAttack());
-console.log(newHeroAttack());
-console.log(newVillainAttack());
-console.log(newHeroAttack());
-console.log(newHeroAttack());
-console.log(newVillainAttack());
-console.log(newHeroAttack());
-console.log(newHeroAttack());
-console.log(newVillainAttack());
-console.log(newHeroAttack());
-console.log(newHeroAttack());
+const init = () => {
+  while (hero.healthPoints > 0 && villain.healthPoints > 0) {
+    console.log(newHeroAttack());
+    console.log(newVillainAttack());
+  }
+  return `Game Over. Play again? 5 4 3 2 1`;
+};
+
+console.log(init());
